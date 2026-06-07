@@ -16,61 +16,50 @@ export const create = async (req, res) => {
     })
 }
 
-export const read = async (req, res) => {
-    const data = await prisma.spesialis.findMany()
+export const getAllSpesialis = async (req, res) => {
+    const data = await prisma.genre.findMany({})
 
-    return res.json({
-        data: data
-    })
+    res.json(data)
 }
 
-export const update = async (req, res) => {
-    const id = Number(req.params.id)
-    const body = req.body
+export const getAllSpesialisById = async (req, res) =>{
 
-    const isExist = await prisma.spesialis.findUnique({
-        where: { id }
-    })
+    const idGenre = req.params.id
 
-    if (!isExist) {
-        return res.status(404).json({
-            message: 'Spesialis ID not found!!'
-        })
-    }
-
-    const data = await prisma.spesialis.update({
-        where: { id },
-        data: {
-            name: body.name,
-            description: body.description
+    const data = await prisma.genre.findUnique({
+        where: {
+            id: Number (idGenre)
         }
     })
 
-    return res.json({
-        message: 'Spesialis updated successfully',
-        data: data
+    res.json(data)
+}
+
+export const updateSpesialis = async (req, res) => {
+    const idGenre = Number(req.params.id)
+
+    await prisma.genre.update({
+        where : {
+            id : idGenre
+        },
+        data: req.body
+    })
+
+    res.json({
+        message: 'Data Was Update Successfully'
     })
 }
 
-export const hapus = async (req, res) => {
-    const id = Number(req.params.id)
+export const deleteSpesialis = async (req, res) =>{
+    const idGenre = Number(req.params.id)
 
-    const isExist = await prisma.spesialis.findUnique({
-        where: { id }
+    await prisma.genre.delete({
+        where :{
+            id : idGenre
+        }
     })
 
-    if (!isExist) {
-        return res.status(404).json({
-            message: 'Spesialis ID not found!!'
-        })
-    }
-
-    const data = await prisma.spesialis.delete({
-        where: { id }
-    })
-
-    return res.json({
-        message: 'Spesialis deleted successfully',
-        data: data
+    res.json({
+        message : 'Data Was Delete'
     })
 }
