@@ -40,12 +40,26 @@ export const updateDokter = async (req, res) => {
     })
 }
 export const getAllDokter = async (req, res) =>{
-    const data = await prisma.movie.findMany({
+    const data = await prisma.dokter.findMany({
         include :{
-            genre : true
+            spesialis : true
         }
     })
 
     res.json(data)
 
+}
+
+export const deleteDokter = async (req, res) => {
+    const idDokter = Number(req.params.id)
+
+    await prisma.dokter.delete({
+        where: {
+            id: idDokter
+        }
+    })
+
+    res.json({
+        message: 'Dokter Was Delete'
+    })
 }

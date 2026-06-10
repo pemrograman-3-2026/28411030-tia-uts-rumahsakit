@@ -17,18 +17,18 @@ export const create = async (req, res) => {
 }
 
 export const getAllSpesialis = async (req, res) => {
-    const data = await prisma.genre.findMany({})
+    const data = await prisma.spesialis.findMany({})
 
     res.json(data)
 }
 
 export const getAllSpesialisById = async (req, res) =>{
 
-    const idGenre = req.params.id
+    const idSpesialis = req.params.id
 
     const data = await prisma.genre.findUnique({
         where: {
-            id: Number (idGenre)
+            id: Number (idSpesialis)
         }
     })
 
@@ -36,11 +36,11 @@ export const getAllSpesialisById = async (req, res) =>{
 }
 
 export const updateSpesialis = async (req, res) => {
-    const idGenre = Number(req.params.id)
+    const idSpesialis = Number(req.params.id)
 
-    await prisma.genre.update({
+    await prisma.spesialis.update({
         where : {
-            id : idGenre
+            id : idSpesialis
         },
         data: req.body
     })
@@ -51,11 +51,11 @@ export const updateSpesialis = async (req, res) => {
 }
 
 export const deleteSpesialis = async (req, res) =>{
-    const idGenre = Number(req.params.id)
+    const idSpesialis = Number(req.params.id)
 
-    await prisma.genre.delete({
+    await prisma.spesialis.delete({
         where :{
-            id : idGenre
+            id : idSpesialis
         }
     })
 
